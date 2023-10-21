@@ -1,6 +1,6 @@
 name: roulette_widget
-description: A roulette widget with customs options.
-version: 1.0.0
+description: A simple customizable roulette widget that you only have to pass the options to be showed.
+version: 1.0.1
 homepage: https://hassansystems.com
 
 environment:

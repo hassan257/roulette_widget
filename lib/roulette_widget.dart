@@ -5,19 +5,19 @@ import 'dart:math';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
-/// Main class, 
+/// Main class,
 /// [widthRoulette] is the width which the roulette will have
 /// [widthIndicator] is the width of the indicator
 /// [heightIndicator] is the height of the indicator
 /// [options] the list of options using the type RouletteElementModel that the roulette draw
 class RouletteWidget extends StatelessWidget {
-  const RouletteWidget({
-    Key? key,
-    required this.widthRoulette,
-    required this.widthIndicator,
-    required this.heightIndicator,
-    required this.options
-  }) : super(key: key);
+  const RouletteWidget(
+      {Key? key,
+      required this.widthRoulette,
+      required this.widthIndicator,
+      required this.heightIndicator,
+      required this.options})
+      : super(key: key);
 
   final double widthRoulette;
   final double widthIndicator;
@@ -31,19 +31,14 @@ class RouletteWidget extends StatelessWidget {
       child: Center(
         child: Stack(
           children: [
-            CustomRoulette(
-              width: widthRoulette,
-              options: options
-            ),
+            CustomRoulette(width: widthRoulette, options: options),
             Positioned(
               left: widthRoulette / 2 - widthIndicator / 2,
               top: 0,
               child: Transform.rotate(
-                angle: 160.2,
-                child: TriangleWidget(
-                  width: widthIndicator, 
-                  height: heightIndicator
-                )),
+                  angle: 160.2,
+                  child: TriangleWidget(
+                      width: widthIndicator, height: heightIndicator)),
             ),
           ],
         ),
@@ -56,14 +51,15 @@ class RouletteWidget extends StatelessWidget {
 class CustomRoulette extends StatefulWidget {
   final double? width;
   final List<RouletteElementModel> options;
-  const CustomRoulette({Key? key, this.width, required this.options}) : super(key: key);
+  const CustomRoulette({Key? key, this.width, required this.options})
+      : super(key: key);
 
   @override
   State<CustomRoulette> createState() => _CustomRouletteState();
 }
 
-class _CustomRouletteState extends State<CustomRoulette>  with SingleTickerProviderStateMixin{
-  
+class _CustomRouletteState extends State<CustomRoulette>
+    with SingleTickerProviderStateMixin {
   bool isSpinning = false;
   double rotationAngle = 0;
 
@@ -71,7 +67,8 @@ class _CustomRouletteState extends State<CustomRoulette>  with SingleTickerProvi
   late AnimationController _animationController;
   @override
   void initState() {
-    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    _animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
     super.initState();
   }
 
@@ -94,10 +91,9 @@ class _CustomRouletteState extends State<CustomRoulette>  with SingleTickerProvi
 
   @override
   Widget build(BuildContext context) {
-    
     const double heightRoulette = 200;
     double widthRoulette = widget.width ?? 200;
-    
+
     return GestureDetector(
       onTap: _spinRoulette,
       onVerticalDragEnd: (_) => _spinRoulette(),
@@ -135,15 +131,18 @@ class RoulettePainter extends CustomPainter {
     final centerY = size.height / 2;
     final radius = size.width / 2;
 
-
-
     final sectionAngle = 2 * pi / options.length;
 
     double startAngle = -pi / 2;
 
     for (int i = 0; i < options.length; i++) {
       final paint = Paint()..color = options[i].color;
-      canvas.drawArc(Rect.fromCircle(center: Offset(centerX, centerY), radius: radius), startAngle, sectionAngle, true, paint);
+      canvas.drawArc(
+          Rect.fromCircle(center: Offset(centerX, centerY), radius: radius),
+          startAngle,
+          sectionAngle,
+          true,
+          paint);
 
       startAngle += sectionAngle;
     }
@@ -162,7 +161,8 @@ class TrianglePainter extends CustomPainter {
   final Offset p3;
   final Color? color;
 
-  TrianglePainter({required this.p1, required this.p2, required this.p3, this.color});
+  TrianglePainter(
+      {required this.p1, required this.p2, required this.p3, this.color});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -194,7 +194,8 @@ class TriangleWidget extends StatelessWidget {
   final double width;
   final double height;
 
-  const TriangleWidget({Key? key, required this.width, required this.height}) : super(key: key);
+  const TriangleWidget({Key? key, required this.width, required this.height})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +212,7 @@ class TriangleWidget extends StatelessWidget {
 }
 
 /// Model of the elements to be showed in the roulette
-class RouletteElementModel{
+class RouletteElementModel {
   final String text;
   final Color color;
   RouletteElementModel({required this.text, required this.color});
