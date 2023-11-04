@@ -10,19 +10,22 @@ import 'package:flutter/material.dart';
 /// [widthIndicator] is the width of the indicator
 /// [heightIndicator] is the height of the indicator
 /// [options] the list of options using the type RouletteElementModel that the roulette draw
+/// [otherActions] a void function to add custom actions to the tap and drag actions
 class RouletteWidget extends StatelessWidget {
-  const RouletteWidget(
-      {Key? key,
-      required this.widthRoulette,
-      required this.widthIndicator,
-      required this.heightIndicator,
-      required this.options})
-      : super(key: key);
+  const RouletteWidget({
+    Key? key,
+    required this.widthRoulette,
+    required this.widthIndicator,
+    required this.heightIndicator,
+    required this.options,
+    this.otherActions,
+  }) : super(key: key);
 
   final double widthRoulette;
   final double widthIndicator;
   final double heightIndicator;
   final List<RouletteElementModel> options;
+  final void Function()? otherActions;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,10 @@ class RouletteWidget extends StatelessWidget {
       child: Center(
         child: Stack(
           children: [
-            CustomRoulette(width: widthRoulette, options: options),
+            CustomRoulette(
+                width: widthRoulette,
+                options: options,
+                otherActions: otherActions),
             Positioned(
               left: widthRoulette / 2 - widthIndicator / 2,
               top: 0,
@@ -51,7 +57,9 @@ class RouletteWidget extends StatelessWidget {
 class CustomRoulette extends StatefulWidget {
   final double? width;
   final List<RouletteElementModel> options;
-  const CustomRoulette({Key? key, this.width, required this.options})
+  final void Function()? otherActions;
+  const CustomRoulette(
+      {Key? key, this.width, required this.options, this.otherActions})
       : super(key: key);
 
   @override
@@ -95,9 +103,24 @@ class _CustomRouletteState extends State<CustomRoulette>
     double widthRoulette = widget.width ?? 200;
 
     return GestureDetector(
-      onTap: _spinRoulette,
-      onVerticalDragEnd: (_) => _spinRoulette(),
-      onHorizontalDragEnd: (_) => _spinRoulette(),
+      onTap: () {
+        _spinRoulette();
+        if (widget.otherActions != null) {
+          widget.otherActions!();
+        }
+      },
+      onVerticalDragEnd: (_) {
+        _spinRoulette();
+        if (widget.otherActions != null) {
+          widget.otherActions!();
+        }
+      },
+      onHorizontalDragEnd: (_) {
+        _spinRoulette();
+        if (widget.otherActions != null) {
+          widget.otherActions!();
+        }
+      },
       child: Column(
         children: [
           Roulette(

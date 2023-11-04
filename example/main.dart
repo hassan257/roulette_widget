@@ -12,6 +12,10 @@ class MyApp extends StatelessWidget {
     const double heightIndicator = 30;
     const double widthIndicator = 30;
     const double widthRoulette = 200;
+    otherActions() {
+      // ignore: avoid_print
+      print('Hello World');
+    }
 
     return MaterialApp(
       title: 'Material App',
@@ -34,6 +38,7 @@ class MyApp extends StatelessWidget {
                     RouletteElementModel(
                         text: 'Option 5', color: Colors.yellow),
                   ],
+                  otherActions: otherActions,
                 ),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,

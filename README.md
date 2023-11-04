@@ -34,5 +34,9 @@ RouletteWidget(
         RouletteElementModel(text: 'Option 4', color: Colors.green),
         RouletteElementModel(text: 'Option 5', color: Colors.yellow),
     ],
+    // Other actions to do after the tap or drag
+    otherActions: (){
+        print('Hello world!');
+    }
 ),
 ```
