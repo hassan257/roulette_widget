@@ -11,6 +11,11 @@ import 'package:flutter/material.dart';
 /// [heightIndicator] is the height of the indicator
 /// [options] the list of options using the type RouletteElementModel that the roulette draw
 /// [otherActions] a void function to add custom actions to the tap and drag actions
+/// [heightCentralWidget] a double value to define the central widget's height
+/// [widthCentralWidget] a double value to define the central widget's width
+/// [centralWidget] a widget to place in the center of the roulette
+/// [borderWidth] a double value to define border's width
+/// [borderColor] a Color value to define border's color
 class RouletteWidget extends StatelessWidget {
   const RouletteWidget({
     Key? key,
@@ -19,6 +24,11 @@ class RouletteWidget extends StatelessWidget {
     required this.heightIndicator,
     required this.options,
     this.otherActions,
+    this.heightCentralWidget,
+    this.widthCentralWidget,
+    this.centralWidget,
+    this.borderWidth,
+    this.borderColor,
   }) : super(key: key);
 
   final double widthRoulette;
@@ -26,6 +36,11 @@ class RouletteWidget extends StatelessWidget {
   final double heightIndicator;
   final List<RouletteElementModel> options;
   final void Function()? otherActions;
+  final double? heightCentralWidget;
+  final double? widthCentralWidget;
+  final Widget? centralWidget;
+  final double? borderWidth;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +50,12 @@ class RouletteWidget extends StatelessWidget {
         child: Stack(
           children: [
             CustomRoulette(
-                width: widthRoulette,
-                options: options,
-                otherActions: otherActions),
+              width: widthRoulette,
+              options: options,
+              otherActions: otherActions,
+              borderWidth: borderWidth,
+              borderColor: borderColor,
+            ),
             Positioned(
               left: widthRoulette / 2 - widthIndicator / 2,
               top: 0,
@@ -45,6 +63,17 @@ class RouletteWidget extends StatelessWidget {
                   angle: 160.2,
                   child: TriangleWidget(
                       width: widthIndicator, height: heightIndicator)),
+            ),
+            Positioned(
+              top: 100 -
+                  (heightCentralWidget != null ? heightCentralWidget! / 2 : 50),
+              left: widthRoulette / 2 -
+                  (widthCentralWidget != null ? widthCentralWidget! / 2 : 0),
+              child: SizedBox(
+                height: heightCentralWidget,
+                width: widthCentralWidget,
+                child: centralWidget,
+              ),
             ),
           ],
         ),
@@ -58,8 +87,15 @@ class CustomRoulette extends StatefulWidget {
   final double? width;
   final List<RouletteElementModel> options;
   final void Function()? otherActions;
+  final double? borderWidth;
+  final Color? borderColor;
   const CustomRoulette(
-      {Key? key, this.width, required this.options, this.otherActions})
+      {Key? key,
+      this.width,
+      required this.options,
+      this.otherActions,
+      this.borderWidth,
+      this.borderColor})
       : super(key: key);
 
   @override
@@ -133,7 +169,10 @@ class _CustomRouletteState extends State<CustomRoulette>
               child: Transform.rotate(
                 angle: rotationAngle,
                 child: CustomPaint(
-                  painter: RoulettePainter(options: widget.options),
+                  painter: RoulettePainter(
+                      options: widget.options,
+                      borderColor: widget.borderColor,
+                      borderWidth: widget.borderWidth),
                 ),
               ),
             ),
@@ -147,7 +186,9 @@ class _CustomRouletteState extends State<CustomRoulette>
 /// The painter of the circle
 class RoulettePainter extends CustomPainter {
   List<RouletteElementModel> options;
-  RoulettePainter({required this.options});
+  final double? borderWidth;
+  final Color? borderColor;
+  RoulettePainter({this.borderColor, this.borderWidth, required this.options});
   @override
   void paint(Canvas canvas, Size size) {
     final centerX = size.width / 2;
@@ -157,6 +198,18 @@ class RoulettePainter extends CustomPainter {
     final sectionAngle = 2 * pi / options.length;
 
     double startAngle = -pi / 2;
+
+    // Dibuja el borde exterior
+    final borderPaint = Paint()
+      ..color = borderColor ?? Colors.white // Puedes ajustar el color del borde
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = borderWidth ?? 0; // Puedes ajustar el ancho del borde
+
+    canvas.drawCircle(
+      Offset(centerX, centerY),
+      radius,
+      borderPaint,
+    );
 
     for (int i = 0; i < options.length; i++) {
       final paint = Paint()..color = options[i].color;

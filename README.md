@@ -37,6 +37,11 @@ RouletteWidget(
     // Other actions to do after the tap or drag
     otherActions: (){
         print('Hello world!');
-    }
+    },
+    borderWidth: 10, // border's width, this value can be null
+    borderColor: Colors.red, // border's color, this value can be null
+    centralWidget: Icon(Icons.user), // a widget to place in the center of the roulette, can be null
+    widthCentralWidget: 100, // the widget's width
+    heightCentralWidget 100, // the widget's height
 ),
 ```

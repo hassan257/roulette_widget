@@ -1,3 +1,6 @@
+## [1.3.0] - Widget on the roulette's center and border
+* Now you can define a widget to be placed in the center of the roulette.
+* A border with customizable width and color be added to the roulette
 ## [1.2.0] - Other action function added
 * Now you can use the property otherActions to add an extra function to the tap or drag action
 

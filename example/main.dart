@@ -39,6 +39,11 @@ class MyApp extends StatelessWidget {
                         text: 'Option 5', color: Colors.yellow),
                   ],
                   otherActions: otherActions,
+                  borderWidth: 20,
+                  borderColor: Colors.black,
+                  centralWidget: const Icon(Icons.tips_and_updates_rounded),
+                  widthCentralWidget: 100,
+                  heightCentralWidget: 100,
                 ),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
