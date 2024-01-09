@@ -1,3 +1,4 @@
+## [1.3.1] - Home page updated
 ## [1.3.0] - Widget on the roulette's center and border
 * Now you can define a widget to be placed in the center of the roulette.
 * A border with customizable width and color be added to the roulette
