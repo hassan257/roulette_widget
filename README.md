@@ -10,7 +10,7 @@ For general information about developing packages, see the Dart guide for
 and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
-# Route Transitions
+# Roulette Widget
 
 A simple customizable roulette widget that you only have to pass the options to be showed.
 
