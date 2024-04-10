@@ -1,3 +1,5 @@
+## [1.4.0] - Update external dependecies
+* We updated the version of animate_do
 ## [1.3.1] - Home page updated
 ## [1.3.0] - Widget on the roulette's center and border
 * Now you can define a widget to be placed in the center of the roulette.
